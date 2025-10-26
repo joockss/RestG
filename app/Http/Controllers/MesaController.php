@@ -62,7 +62,7 @@ public function update(Request $request, $id)
     $mesa = Mesa::findOrFail($id);
 
     $request->validate([
-        'estado' => 'required|in:libre,reservada,ocupada'
+        'estado' => 'required|in:libre,reservado,ocupado'
     ]);
 
     // IMPORTANTE: Los checkboxes solo envían valor cuando están marcados

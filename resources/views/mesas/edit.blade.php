@@ -26,8 +26,8 @@
             <label for="estado" class="form-label">Estado</label>
             <select name="estado" id="estado" class="form-select" required>
                 <option value="libre" {{ $mesa->estado == 'libre' ? 'selected' : '' }}>Libre</option>
-                <option value="reservada" {{ $mesa->estado == 'reservada' ? 'selected' : '' }}>Reservada</option>
-                <option value="ocupada" {{ $mesa->estado == 'ocupada' ? 'selected' : '' }}>Ocupada</option>
+                <option value="reservado" {{ $mesa->estado == 'reservada' ? 'selected' : '' }}>Reservada</option>
+                <option value="ocupado" {{ $mesa->estado == 'ocupada' ? 'selected' : '' }}>Ocupada</option>
             </select>
         </div>
 

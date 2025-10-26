@@ -27,6 +27,9 @@
   <!-- Main CSS File -->
   <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
 </head>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <body class="index-page">
 
   <!-- Header -->
@@ -35,16 +38,42 @@
       <a href="{{ url('/') }}" class="logo d-flex align-items-center">
         <h1 class="sitename">Restaurante</h1>
       </a>
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="{{ url('/') }}" class="active">Inicio</a></li>
-          <li><a href="{{ route('mesas.index') }}">Mesas</a></li>
-          <li><a href="{{ route('reservas.index') }}">Reservas</a></li>
-          <li><a href="{{ route('reservas.create') }}">Create_Reservas</a></li>
-          <!-- Agrega más enlaces si lo necesitas -->
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
+        <nav id="navmenu" class="navmenu">
+            <ul>
+                <li><a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Inicio</a></li>
+
+                @auth
+                @if(auth()->user()->isAdmin())
+                    <li><a href="{{ route('mesas.index') }}">Mesas</a></li>
+                    <li><a href="{{ route('reservas.index') }}">Reservas</a></li>
+                @endif
+
+                <li><a href="{{ route('reservas.create') }}">Nueva Reserva</a></li>
+                
+                <li class="dropdown">
+                    <a href="#">
+                    <span>{{ Auth::user()->name }}</span>
+                    <i class="bi bi-chevron-down toggle-dropdown"></i>
+                    </a>
+                    <ul>
+                    <li>
+                        <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="dropdown-item bg-transparent border-0 text-start">
+                            <i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
+                        </button>
+                        </form>
+                    </li>
+                    </ul>
+                </li>
+                @else
+                <li><a href="{{ route('login') }}">Iniciar Sesión</a></li>
+                <li><a href="{{ route('register') }}">Registrarse</a></li>
+                @endauth
+            </ul>
+
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
     </div>
   </header>
   <!-- End Header -->

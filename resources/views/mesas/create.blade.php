@@ -36,8 +36,8 @@
                 <select name="estado" id="estado" class="form-select" required>
                     <option value="">Selecciona un estado</option>
                     <option value="libre" selected>Libre</option>
-                    <option value="reservada">Reservada</option>
-                    <option value="ocupada">Ocupada</option>
+                    <option value="reservado">Reservada</option>
+                    <option value="ocupado">Ocupada</option>
                 </select>
             </div>
 

@@ -3,6 +3,18 @@
         @section('title', 'Reservar Cliente')
 
         @section('content')
+        
+
+        <!-- Mostrar mensaje de éxito -->
+         
+        @if (session('success'))
+        <div class="container mt-3">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{ session('success') }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        </div>
+        @endif
 
                 {{-- Mostrar errores --}}
         @if ($errors->any())
@@ -140,3 +152,15 @@
           </div>
         </div>
         @endsection
+
+            @if (session('success'))
+                <script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Reserva exitosa!',
+                        text: 'Estaremos a su espera 😊',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Aceptar'
+                    });
+                </script>
+            @endif

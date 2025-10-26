@@ -65,12 +65,13 @@ class ReservaController extends Controller
             $mesa = Mesa::find($validated['mesa_id']);
                 if ($mesa) 
                 {
-                    $mesa->estado = 'reservada';
+                    $mesa->estado = 'reservado';
                     $mesa->save();
                     }
-        return redirect()->route('reservas.index')
-            ->with('success', 'Reserva creada exitosamente.');
+
+             return back()->with('success', 'Reserva exitosa. ¡Estaremos a su espera!'); //cambio nuevo
     }
+
 
     public function edit($id)
     {

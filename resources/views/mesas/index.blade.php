@@ -25,8 +25,8 @@
           <td>
             <span class="badge 
               @if($m->estado == 'libre') bg-success
-              @elseif($m->estado == 'ocupada') bg-dark
-              @elseif($m->estado == 'reservada') bg-secondary
+              @elseif($m->estado == 'ocupado') bg-dark
+              @elseif($m->estado == 'reservado') bg-secondary
               @else bg-secondary @endif">
               {{ ucfirst($m->estado) }}
             </span>
