@@ -15,10 +15,9 @@ return new class extends Migration
             $table->id();
             $table->integer('numero')->unique(); // número de mesa (ej: 1, 2, 3...)
             $table->integer('capacidad');        // cuántas personas entran
-            $table->enum('estado', ['libre', 'ocupado', 'reservado'])->default('libre');
+            $table->string('estado', ['libre', 'ocupado', 'reservado'])->default('libre');
             $table->timestamps();
-            $table->boolean('disponible')->default(true);
-
+            $table->bo();
         });
     }
 

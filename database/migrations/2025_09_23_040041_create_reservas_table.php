@@ -16,8 +16,7 @@ return new class extends Migration
             $table->foreignId('mesa_id')->constrained('mesas')->onDelete('cascade');
             $table->string('nombre_cliente');
             $table->string('telefono')->nullable();
-            $table->date('fecha');
-            $table->time('hora');
+            $table->dateTime('fecha_hora');
             $table->timestamps();
         });
     }
