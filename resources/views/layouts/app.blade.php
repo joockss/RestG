@@ -40,6 +40,7 @@
           <li><a href="{{ url('/') }}" class="active">Inicio</a></li>
           <li><a href="{{ route('mesas.index') }}">Mesas</a></li>
           <li><a href="{{ route('reservas.index') }}">Reservas</a></li>
+          <li><a href="{{ route('reservas.create') }}">Create_Reservas</a></li>
           <!-- Agrega más enlaces si lo necesitas -->
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -62,10 +63,10 @@
           </a>
           <p>Bienvenido a nuestro restaurante. ¡Disfruta tu experiencia!</p>
           <div class="social-links d-flex mt-4">
-            <a href="#"><i class="bi bi-twitter-x"></i></a>
-            <a href="#"><i class="bi bi-facebook"></i></a>
-            <a href="#"><i class="bi bi-instagram"></i></a>
-            <a href="#"><i class="bi bi-linkedin"></i></a>
+            <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter-x"></i></a>
+            <a href="https://www.facebook.com/diego.letich?locale=es_LA" target="_blank" rel="noopener noreferrer"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.instagram.com/justinstevensly/" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram"></i></a>
+            <a href="https://linkedin.com/in/tu_perfil" target="_blank" rel="noopener noreferrer"><i class="bi bi-linkedin"></i></a>
           </div>
         </div>
         <div class="col-lg-2 col-6 footer-links">
@@ -86,17 +87,17 @@
         </div>
         <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
           <h4>Contáctanos</h4>
-          <p>Dirección del restaurante</p>
-          <p>Ciudad, País</p>
-          <p><strong>Teléfono:</strong> <span>+1 234 567 890</span></p>
-          <p><strong>Email:</strong> <span>info@restaurante.com</span></p>
+          <p>Av. Tupac Amaru</p>
+          <p>Lima, Peru</p>
+          <p><strong>Teléfono:</strong> <span>+51 914 860 659 </span></p>
+          <p><strong>Email:</strong> <span>JQuispeCasas@Carnitasbeef.com</span></p>
         </div>
       </div>
     </div>
     <div class="container copyright text-center mt-4">
-      <p>© Copyright <strong class="px-1 sitename">Restaurante</strong> Todos los derechos reservados</p>
+      <p>© Copyright <strong class="px-1 sitename">Carnitasbeef</strong> Todos los derechos reservados</p>
       <div class="credits">
-        Diseño basado en <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        Creado por <a href="https://bootstrapmade.com/">NC</a>
       </div>
     </div>
   </footer>

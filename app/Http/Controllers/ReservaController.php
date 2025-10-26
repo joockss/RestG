@@ -7,11 +7,28 @@ use Illuminate\Http\Request;
 
 class ReservaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $reservas = Reserva::with('mesa')->orderBy('fecha_hora','desc')->get();
-        return view('reservas.index', compact('reservas'));
+        $query = Reserva::with('mesa'); // <- Usa el with aquí para incluir la relación
+
+        // 🔍 Aplicar filtrado por rango de fechas
+        if ($request->filled('fecha_inicio') && $request->filled('fecha_fin')) {
+             $query->whereBetween('fecha', [$request->fecha_inicio, $request->fecha_fin]);
+        } elseif ($request->filled('fecha_inicio')) {
+            $query->where('fecha', '>=', $request->fecha_inicio);
+           } elseif ($request->filled('fecha_fin')) {
+            $query->where('fecha', '<=', $request->fecha_fin);
+            }
+
+            // 🔽 Finalmente obtener resultados ordenados
+         $reservas = $query
+               ->orderBy('fecha', 'desc')
+               ->orderBy('hora', 'desc')
+                ->get();
+
+            return view('reservas.index', compact('reservas'));
     }
+
 
     public function create()
     {
@@ -26,46 +43,74 @@ class ReservaController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        // ✅ CORREGIDO: Validar fecha y hora separadas
+        $validated = $request->validate([
             'mesa_id' => 'required|exists:mesas,id',
-            'nombre_cliente' => 'required|string',
-            'fecha_hora' => 'required|date',
+            'nombre_cliente' => 'required|string|max:255',
+            'telefono' => 'required|string|max:9',
+            'fecha' => 'required|date|after:today',  // ✅ Cambió de fecha_hora a fecha
+            'hora' => 'required',                     // ✅ Agregado
+            'detalles' => 'nullable|string|max:500'
         ]);
 
-        Mesa::create([
-        'numero' => $request->numero,
-        'capacidad' => $request->capacidad,
-        'estado' => $request->estado,
-        'reservable' => $request->has('reservable') ? 1 : 0
+        // ✅ CORREGIDO: Crear con fecha y hora separadas
+        Reserva::create([
+            'mesa_id' => $validated['mesa_id'],
+            'nombre_cliente' => $validated['nombre_cliente'],
+            'telefono' => $validated['telefono'],
+            'fecha' => $validated['fecha'],           // ✅ Cambió
+            'hora' => $validated['hora'],             // ✅ Cambió
+            'detalles' => $validated['detalles'],
         ]);
-
-        return redirect()->route('reservas.index')->with('success','Reserva creada.');
+            $mesa = Mesa::find($validated['mesa_id']);
+                if ($mesa) 
+                {
+                    $mesa->estado = 'reservada';
+                    $mesa->save();
+                    }
+        return redirect()->route('reservas.index')
+            ->with('success', 'Reserva creada exitosamente.');
     }
 
     public function edit($id)
     {
         $reserva = Reserva::findOrFail($id);
         $mesas = Mesa::orderBy('numero')->get();
-        return view('reservas.edit', compact('reserva','mesas'));
+        return view('reservas.edit', compact('reserva', 'mesas'));
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
+        // ✅ CORREGIDO: Validar fecha y hora separadas
+        $validated = $request->validate([
             'mesa_id' => 'required|exists:mesas,id',
-            'nombre_cliente' => 'required|string',
-            'fecha_hora' => 'required|date',
+            'nombre_cliente' => 'required|string|max:255',
+            'telefono' => 'required|string|max:9',
+            'fecha' => 'required|date',               // ✅ Cambió de fecha_hora a fecha
+            'hora' => 'required',                     // ✅ Agregado
+            'detalles' => 'nullable|string|max:500'
         ]);
 
         $reserva = Reserva::findOrFail($id);
-        $reserva->update($request->only('mesa_id','nombre_cliente','telefono','fecha_hora','estado'));
+        
+        // ✅ CORREGIDO: Actualizar con fecha y hora separadas
+        $reserva->update([
+            'mesa_id' => $validated['mesa_id'],
+            'nombre_cliente' => $validated['nombre_cliente'],
+            'telefono' => $validated['telefono'],
+            'fecha' => $validated['fecha'],           // ✅ Cambió
+            'hora' => $validated['hora'],             // ✅ Cambió
+            'detalles' => $validated['detalles'],
+        ]);
 
-        return redirect()->route('reservas.index')->with('success','Reserva actualizada.');
+        return redirect()->route('reservas.index')
+            ->with('success', 'Reserva actualizada exitosamente.');
     }
 
     public function destroy($id)
     {
         Reserva::findOrFail($id)->delete();
-        return redirect()->route('reservas.index')->with('success','Reserva eliminada.');
+        return redirect()->route('reservas.index')
+            ->with('success', 'Reserva eliminada exitosamente.');
     }
 }

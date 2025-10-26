@@ -209,3 +209,15 @@
   document.addEventListener('scroll', navmenuScrollspy);
 
 })();
+
+// Proteger enlaces de redes sociales
+document.addEventListener('DOMContentLoaded', function() {
+  const socialLinks = document.querySelectorAll('.social-links a[target="_blank"]');
+  
+  socialLinks.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+    }, true); // El 'true' hace que capture el evento ANTES que otros listeners
+  });
+});

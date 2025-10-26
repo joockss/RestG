@@ -145,28 +145,40 @@ h6 {
 /*--------------------------------------------------------------
 # Global Header
 --------------------------------------------------------------*/
-.header {
-  --background-color: rgba(255, 255, 255, 0.5); /* Transparente pero visible */
-  color: var(--default-color);
-  background-color: var(--background-color);
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
   padding: 15px 0;
-  transition: all 0.5s;
-  z-index: 997;
+  color: var(--default-color);
+  transition: all 0.5s ease;
+}
+
+/* Fondo semitransparente con blur */
+header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.589); /* Transparente */
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  z-index: -1; /* Se coloca detrás del contenido */
 }
 
-.header .logo {
+/* Logo y textos */
+header .logo {
   line-height: 1;
 }
 
-.header .logo img {
+header .logo img {
   max-height: 32px;
   margin-right: 8px;
 }
 
-.header .logo h1 {
+header .logo h1 {
   font-size: 30px;
   margin: 0;
   font-weight: 400;
@@ -174,20 +186,11 @@ h6 {
 }
 
 /* Cuando haces scroll, se vuelve más opaco */
-.scrolled .header {
-  isolation: isolate;
-  border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
-}
-
-.scrolled .header::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.95); /* Más opaco al hacer scroll */
+.scrolled header::before {
+  background: rgba(255, 255, 255, 0.774);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
-  pointer-events: none;
-  z-index: -1;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 /*--------------------------------------------------------------
